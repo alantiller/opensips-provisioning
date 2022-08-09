@@ -1,0 +1,23 @@
+/*** General ***/
+body {margin: 0;padding: 0;font-family: MontserratRegular;}
+*, *:before, *:after {-webkit-box-sizing: border-box;box-sizing: border-box;}
+
+/*** Fonts ***/
+@font-face {font-family: MontserratRegular;src: url(../fonts/Montserrat-Regular.ttf);}
+@font-face {font-family: MontserratSemiBold;src: url(../fonts/Montserrat-SemiBold.ttf);}
+@font-face {font-family: MontserratBold;src: url(../fonts/Montserrat-Bold.ttf);}
+
+/*** Text ***/
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {font-family: MontserratSemiBold;}
+
+/*** NaV Pills ***/
+.nav-pills .nav-link {font-family: MontserratSemiBold;}
+
+/*** Navbar Brand **/
+.navbar-brand {font-family: MontserratSemiBold;}
+
+/*** Max Widths ***/
+.mw-1100 {max-width: 1100px !important;}
+
+/*** Fix Max Width ***/
+.datatable {max-width: 100% !important;}

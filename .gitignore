@@ -1,0 +1,14 @@
+# Remove vendor folder
+vendor
+
+# Remove .env used for testing
+.env
+
+# Remove local composer.lock
+composer.lock
+
+# Ignore test file
+test.php
+
+# Internal notes
+permissions.txt
