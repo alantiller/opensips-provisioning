@@ -29,3 +29,6 @@ $router->map('GET', '/permissions', 'App\Permissions::view', 'permissions');
 
 // Audit
 $router->map('GET', '/audit', 'App\Audit::view', 'audit');
+
+// Audit
+$router->map('GET', '/opensips-logs', 'App\OpenSIPSLogs::view', 'opensips_logs');

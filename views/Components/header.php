@@ -70,6 +70,12 @@
                                 <a class="menu nav-link <?php if ($active_page === 'audit') {echo 'active';} ?>" href="<?php echo $this->e($_ENV['PUBLIC_URL']) . $router->generate('audit'); ?>">Audit Logs</a>
                             </div>
                         <?php } ?>
+
+                        <?php if (\Auth\Permissions::check('local_opensipslogs', $user['id']) != false) { ?>
+                            <div class="nav-item">
+                                <a class="menu nav-link <?php if ($active_page === 'opensips_logs') {echo 'active';} ?>" href="<?php echo $this->e($_ENV['PUBLIC_URL']) . $router->generate('opensips_logs'); ?>">OpenSIPS Logs</a>
+                            </div>
+                        <?php } ?>
                     </div>
                 <?php } ?>
             </div>

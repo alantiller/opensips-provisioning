@@ -45,6 +45,7 @@
                                 <option value="osp_permissions">Permissions (osp_permissions)</option>
                                 <option value="osp_tokens">API Tokens (osp_tokens)</option>
                                 <option value="osp_audit">Audit Log (osp_audit)</option>
+                                <option value="local_opensipslogs">OpenSIPS Log (local_opensipslogs)</option>
                             </select>
                         </div>
 
