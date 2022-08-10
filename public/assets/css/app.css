@@ -23,4 +23,4 @@ body {margin: 0;padding: 0;font-family: MontserratRegular;}
 .datatable {max-width: 100% !important;}
 
 /*** Add max to code ***/
-pre code {height: 450px;overflow: auto;}
+pre {height: 450px;overflow: auto;}
