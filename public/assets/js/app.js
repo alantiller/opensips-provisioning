@@ -476,7 +476,7 @@ $(document).on("click", '[data-action="create_permission"]', function(e) {
             $('#list_permissions').DataTable().ajax.reload();
         } else {
             // Login failed show error message
-            $('[data-message="create_permission"]').html("<div class=\"alert alert-danger\" role=\"alert\">" + data.error.message + "</div>");
+            $('[data-message="create_permission"]').html("<div class=\"alert alert-danger\" role=\"alert\">" + response.error.message + "</div>");
         }
     });
 
@@ -596,6 +596,45 @@ $(document).ready( function () {
             }
         }); 
     }
+});
+
+
+/*
+ * Account Functions
+ */
+
+// Change password
+$(document).on("click", '[data-action="change_password"]', function(e) {
+    // Run error handling and return if any errors are found
+    error = 0; 
+    if( !$('[data-input="password_current"]').val() ) {$('[data-input="password_current"]').addClass('is-invalid');error++;}else{$('[data-input="password_current"]').removeClass('is-invalid');}
+    if( !$('[data-input="password_new"]').val() ) {$('[data-input="password_new"]').addClass('is-invalid');error++;}else{$('[data-input="password_new"]').removeClass('is-invalid');}
+    if( !$('[data-input="password_repeat"]').val() ) {$('[data-input="password_repeat"]').addClass('is-invalid');error++;}else{$('[data-input="password_repeat"]').removeClass('is-invalid');}   
+    if( $('[data-input="password_new"]').val() != $('[data-input="password_repeat"]').val() ) {$('[data-input="password_new"]').addClass('is-invalid');$('[data-input="password_repeat"]').addClass('is-invalid');error++;} else {$('[data-input="password_new"]').removeClass('is-invalid');$('[data-input="password_repeat"]').removeClass('is-invalid');}
+    if (error > 0) {return;}
+
+    // Call the API
+    fetch(public_url + '/api/v1/account/password', {
+        method: 'PUT',
+        body: JSON.stringify({
+            "password": $('[data-input="password_current"]').val(),
+            "new_password": $('[data-input="password_new"]').val()
+        }),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(async function (result) {
+        if (result.status == 204) {
+            $('[data-message="change_password"]').html("<div class=\"alert alert-success\" role=\"alert\">Password changed successfully</div>");
+        } else {
+            var response = await result.json();
+            $('[data-message="change_password"]').html("<div class=\"alert alert-danger\" role=\"alert\">" + response.error.message + "</div>");
+        }
+    });
+
+    // Remove the error message and reset the text on the button
+    setTimeout(function() { $('[data-message="change_password"]').html(""); }, 3000);
 });
 
 

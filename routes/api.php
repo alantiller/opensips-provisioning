@@ -54,7 +54,8 @@ $router->map('POST', '/api/v1/permissions', 'Api\V1\Permissions\Create::create',
 // V1 - Permissions - Delete
 $router->map('DELETE', '/api/v1/permissions/[i:id]', 'Api\V1\Permissions\Delete::delete', 'delete_permission');
 
-
+// V1 - Account - Password
+$router->map('PUT', '/api/v1/account/password', 'Api\V1\Account\Password::change', 'change_account_password');
 
 // V1 - Datatable - Subscribers
 $router->map('GET', '/api/v1/datatables/subscribers', 'Api\V1\Datatables\Subscribers::get', 'get_subscribers_datatable');

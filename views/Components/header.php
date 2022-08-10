@@ -21,7 +21,7 @@
                                     <?php echo $this->e($user['name']); ?>
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-end">
-                                    <a href="" class="dropdown-item">Documentation</a>
+                                    <a href="<?php echo $this->e($_ENV['PUBLIC_URL']) . $router->generate('account'); ?>" class="dropdown-item">Account</a>
                                     <a data-action="logout" class="text-danger dropdown-item">Logout</a>
                                 </div>
                             </div>

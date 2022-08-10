@@ -32,3 +32,6 @@ $router->map('GET', '/audit', 'App\Audit::view', 'audit');
 
 // Audit
 $router->map('GET', '/opensips-logs', 'App\OpenSIPSLogs::view', 'opensips_logs');
+
+// Audit
+$router->map('GET', '/account', 'App\Account::view', 'account');
