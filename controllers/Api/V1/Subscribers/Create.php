@@ -171,29 +171,43 @@ class Create
     {
         global $local;
 
-        try {
-            // Generate global password
-            $password = (new TokenGenerator())->generateToken(12);
+        // Generate global password
+        $password = (new TokenGenerator())->generateToken(12);
 
-            // Get all server from the gateways table
-            $provisions = $local->select('osp_provisions', '*', ['server' => $server, 'enabled' => 1]);
+        // Get all server from the gateways table
+        $provisions = $local->select('osp_provisions', '*', ['server' => $server, 'enabled' => 1]);
 
-            // Loop through each gateway and get a count
-            foreach ($provisions as $provision) {
+        // Loop through each gateway and get a count
+        foreach ($provisions as $provision) {
+            try {
+                // Create the body
                 $request_body = $provision['request_body'];
                 $request_body = str_replace('{{OpenSIPS.Username}}', $cli, $request_body);
                 $request_body = str_replace('{{OpenSIPS.Password}}', $password, $request_body);
 
+                // Create options
+                $options = array('body' => $request_body);
+
+                // Set auth
+                if (isset($provision['request_auth']) && $provision['request_auth'] != null)
+                {
+                    $auth_json = json_decode($provision['request_auth'], true);
+                    switch ($auth_json['type']) {
+                        case 'basic':
+                            $options['auth'] = array($auth_json['username'], $auth_json['password']);
+                            break;
+                        case 'bearer':
+                            $options['headers'] = array('Authorization' => 'Bearer ' . $auth_json['bearer']);
+                            break;
+                    }
+                }
+
                 // Make the API call
                 $client = new Client();
-                $client->request($provision['request_method'], $provision['request_url'], [
-                    'auth' => $provision['request_auth'],
-                    'body' => $request_body
-                ]);
+                $client->request($provision['request_method'], $provision['request_url'], $options);
+            } catch (Exception $error) {
             }
-        } catch (Exception $error) {
         }
-
         return true;
     }
 }
