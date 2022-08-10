@@ -22,7 +22,7 @@ class Audit
             $response = array('data' => array());
 
             // Get all server from the gateways table
-            $audits = $local->select('osp_audit', '*', ['response_code[!]' => '200', 'LIMIT' => 5, 'ORDER' => ['id' => 'DESC']]);
+            $audits = $local->select('osp_audit', '*', ['response_code[!~]' => '2', 'LIMIT' => 5, 'ORDER' => ['id' => 'DESC']]);
 
             // Loop through each gateway and get a count
             foreach ($audits as $audit) {
