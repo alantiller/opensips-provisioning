@@ -44,6 +44,7 @@ class OpenSIPSLogs
         if (!$permission)
         {
             header('location: ' . $_ENV['PUBLIC_URL'] . $router->generate('dashboard'));
+            die();
         }
 
         return true;
