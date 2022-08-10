@@ -10,20 +10,20 @@
                     <div class="mt-4">
                         <div class="mb-3 form-group">
                             <label for="password_current" class="mb-1">Current Password</label>
-                            <input type="text" class="form-control" placeholder="" data-input="password_current"/>
+                            <input type="password" class="form-control" placeholder="" data-input="password_current"/>
                         </div>
 
                         <div class="mb-3 form-group">
                             <label for="password_current" class="mb-1">New Password</label>
-                            <input type="text" class="form-control" placeholder="" data-input="password_new"/>
+                            <input type="password" class="form-control" placeholder="" data-input="password_new"/>
                         </div>
 
                         <div class="mb-3 form-group">
                             <label for="password_current" class="mb-1">Repeat New Password</label>
-                            <input type="text" class="form-control" placeholder="" data-input="password_repeat"/>
+                            <input type="password" class="form-control" placeholder="" data-input="password_repeat"/>
                         </div>
 
-                        <button type="submit" class="btn btn-primary mb-3" data-action="change_password">Change Passowrd</button>
+                        <button type="submit" class="btn btn-primary mb-3" data-action="change_password">Change Password</button>
 
                         <span data-message="change_password"></span>
                     </div>
