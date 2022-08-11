@@ -31,6 +31,13 @@ class Audit
             {
                 $request_body = json_decode($request_body, true);
                 $request_body['password'] = "omitted";
+                $request_body = json_encode($request_body);
+            }
+
+            // Remove new password from array
+            if (isset(json_decode($request_body, true)['new_password']))
+            {
+                $request_body = json_decode($request_body, true);
                 $request_body['new_password'] = "omitted";
                 $request_body = json_encode($request_body);
             }
