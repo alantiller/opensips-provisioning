@@ -108,6 +108,9 @@ $local->create("osp_audit", [
 		"AUTO_INCREMENT",
 		"PRIMARY KEY"
 	],
+    "user" => [
+		"INT"
+	],
     "method" => [
 		"VARCHAR(50)",
 		"NOT NULL"
