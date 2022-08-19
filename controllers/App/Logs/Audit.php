@@ -6,7 +6,7 @@
 |--------------------------------------------------------------------------
 */
 
-namespace App;
+namespace App\Logs;
 
 class Audit
 {
@@ -16,7 +16,7 @@ class Audit
         
         self::authenticate();
 
-        echo $templates->render('App::Audit');
+        echo $templates->render('App::Logs/Audit');
     }
 
     // This function authenticates the page and checks the user should have access

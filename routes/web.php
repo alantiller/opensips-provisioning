@@ -28,10 +28,10 @@ $router->map('GET', '/users', 'App\Users::view', 'users');
 $router->map('GET', '/permissions', 'App\Permissions::view', 'permissions');
 
 // Audit
-$router->map('GET', '/audit', 'App\Audit::view', 'audit');
+$router->map('GET', '/logs/audit', 'App\Logs\Audit::view', 'logs_audit');
 
 // Audit
-$router->map('GET', '/opensips-logs', 'App\OpenSIPSLogs::view', 'opensips_logs');
+$router->map('GET', '/logs/opensips', 'App\Logs\OpenSIPS::view', 'logs_opensips');
 
 // Audit
 $router->map('GET', '/account', 'App\Account::view', 'account');

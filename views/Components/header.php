@@ -67,13 +67,11 @@
 
                         <?php if (\Auth\Permissions::check('osp_audit', $user['id']) != false) { ?>
                             <div class="nav-item">
-                                <a class="menu nav-link <?php if ($active_page === 'audit') {echo 'active';} ?>" href="<?php echo $this->e($_ENV['PUBLIC_URL']) . $router->generate('audit'); ?>">Audit Logs</a>
+                                <a class="menu nav-link <?php if ($active_page === 'logs_audit' || $active_page === 'logs_opensips') {echo 'active';} ?>" href="<?php echo $this->e($_ENV['PUBLIC_URL']) . $router->generate('logs_audit'); ?>">Logs</a>
                             </div>
-                        <?php } ?>
-
-                        <?php if (\Auth\Permissions::check('local_opensipslogs', $user['id']) != false) { ?>
+                        <?php } elseif (\Auth\Permissions::check('local_opensipslogs', $user['id']) != false) { ?>
                             <div class="nav-item">
-                                <a class="menu nav-link <?php if ($active_page === 'opensips_logs') {echo 'active';} ?>" href="<?php echo $this->e($_ENV['PUBLIC_URL']) . $router->generate('opensips_logs'); ?>">OpenSIPS Logs</a>
+                                <a class="menu nav-link <?php if ($active_page === 'logs_opensips') {echo 'active';} ?>" href="<?php echo $this->e($_ENV['PUBLIC_URL']) . $router->generate('logs_opensips'); ?>">Logs</a>
                             </div>
                         <?php } ?>
                     </div>

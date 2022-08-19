@@ -1,6 +1,8 @@
 <?php $this->layout('Components::template', ['page_title' => 'Audit Logs']) ?>
 
-<div class="container-md py-3">
+<?php $this->insert('Components::Logs/Menu'); ?>
+
+<div class="container-md py-4">
     <div class="row">
         <div class="col-md-12">
             <table class="table align-middle" id="list_audit">

@@ -6,9 +6,9 @@
 |--------------------------------------------------------------------------
 */
 
-namespace App;
+namespace App\Logs;
 
-class OpenSIPSLogs
+class OpenSIPS
 {
     public static function view()
     {
@@ -22,7 +22,7 @@ class OpenSIPSLogs
             $content = 'File was not found.';
         }
 
-        echo $templates->render('App::OpenSIPSLogs', ['content' => $content]);
+        echo $templates->render('App::Logs\OpenSIPS', ['content' => $content]);
     }
 
     // This function authenticates the page and checks the user should have access
