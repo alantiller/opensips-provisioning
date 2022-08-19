@@ -22,7 +22,7 @@ class OpenSIPS
             $content = 'File was not found.';
         }
 
-        echo $templates->render('App::Logs\OpenSIPS', ['content' => $content]);
+        echo $templates->render('App::Logs/OpenSIPS', ['content' => $content]);
     }
 
     // This function authenticates the page and checks the user should have access
