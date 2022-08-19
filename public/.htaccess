@@ -5,3 +5,7 @@ Options -MultiViews
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ /index.php [L,QSA]
+
+RewriteRule .* - [E=HTTP_CONTENT_TYPE:%{HTTP:Content-Type}]
+
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
