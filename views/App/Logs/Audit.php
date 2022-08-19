@@ -10,6 +10,7 @@
                     <tr>
                         <th></th>
                         <th>ID</th>
+                        <th>User</th>
                         <th>Response Code</th>
                         <th>Method</th>
                         <th>Request URL</th>

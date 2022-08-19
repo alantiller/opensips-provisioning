@@ -19,12 +19,22 @@ class Audit
 
             $columns = array(
                 array( 'db' => 'id',            'dt' => 0 ),
-                array( 'db' => 'response_code', 'dt' => 1 ),
-                array( 'db' => 'method',        'dt' => 2 ),
-                array( 'db' => 'request_url',   'dt' => 3 ),
-                array( 'db' => 'request_body',  'dt' => 4 ),
-                array( 'db' => 'response_body', 'dt' => 5 ),
-                array( 'db' => 'timestamp',     'dt' => 6,
+                array( 'db' => 'user',          'dt' => 1,
+                    'formatter' => function( $d, $row ) {
+                        global $local;
+                        if ($d != 0 && $d != NULL && $d != "") {
+                            return $local->get('osp_users', 'name', ['id' => $d]);
+                        } else {
+                            return '';
+                        }
+                    }
+                ),
+                array( 'db' => 'response_code', 'dt' => 2 ),
+                array( 'db' => 'method',        'dt' => 3 ),
+                array( 'db' => 'request_url',   'dt' => 4 ),
+                array( 'db' => 'request_body',  'dt' => 5 ),
+                array( 'db' => 'response_body', 'dt' => 6 ),
+                array( 'db' => 'timestamp',     'dt' => 7,
                     'formatter' => function( $d, $row ) {
                         return date( 'd/m/Y H:i', strtotime($d));
                     }

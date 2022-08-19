@@ -561,7 +561,7 @@ $(document).ready( function () {
                 [1, 'desc']
             ],
             "rowCallback": function( row, data ) {
-                if ( data[1].substring(0, 1) != "2" ) {
+                if ( data[2].substring(0, 1) != "2" ) {
                     $(row).css( 'background-color', '#ffa59e' );
                 }
             },
@@ -576,7 +576,8 @@ $(document).ready( function () {
                 { data: 1 },
                 { data: 2 },
                 { data: 3 },
-                { data: 6 },
+                { data: 4 },
+                { data: 7 },
             ],
         });
 
