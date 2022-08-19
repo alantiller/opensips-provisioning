@@ -539,13 +539,13 @@ $(document).ready( function () {
                 '<tr>' +
                 '<td>Request Body:</td>' +
                 '<td>' +
-                row[4] +
+                row[5] +
                 '</td>' +
                 '</tr>' +
                 '<tr>' +
                 '<td>Response Body:</td>' +
                 '<td>' +
-                row[5] +
+                row[6] +
                 '</td>' +
                 '</tr>' +
                 '</table>'
