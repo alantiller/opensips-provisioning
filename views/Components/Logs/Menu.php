@@ -7,12 +7,12 @@
 
             <div class="nav nav-pills">
                 <?php if (\Auth\Permissions::check('osp_audit', $user['id']) != false) { ?>
-                    <div class="nav-item">
+                    <div class="nav-item me-2">
                         <a class="nav-link <?php if ($active_page === 'logs_audit') {echo 'active';} ?>" href="<?php echo $this->e($_ENV['PUBLIC_URL']) . $router->generate('logs_audit'); ?>">Audit</a>
                     </div>
                 <?php } ?>
                 <?php if (\Auth\Permissions::check('local_opensipslogs', $user['id']) != false) { ?>
-                    <div class="nav-item">
+                    <div class="nav-item me-2">
                         <a class="nav-link <?php if ($active_page === 'logs_opensips') {echo 'active';} ?>" href="<?php echo $this->e($_ENV['PUBLIC_URL']) . $router->generate('logs_opensips'); ?>">OpenSIPS</a>
                     </div>
                 <?php } ?>
