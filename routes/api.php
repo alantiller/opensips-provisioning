@@ -30,6 +30,12 @@ $router->map('GET', '/api/v1/dashboard/audit-errors', 'Api\V1\Dashboard\Audit::e
 // V1 - Subscribers - Create
 $router->map('POST', '/api/v1/subscribers', 'Api\V1\Subscribers\Create::create', 'create_a_subscriber');
 
+// V1 - Subscribers - Get
+$router->map('GET', '/api/v1/subscribers/[i:id]', 'Api\V1\Subscribers\Get::get', 'get_a_subscriber');
+
+// V1 - Subscribers - Metadata
+$router->map('GET', '/api/v1/subscribers/[i:id]/metadata', 'Api\V1\Subscribers\Metadata::get', 'get_a_subscribers_metadata');
+
 // V1 - Subscribers - Delete
 $router->map('DELETE', '/api/v1/subscribers/[i:id]', 'Api\V1\Subscribers\Delete::delete', 'delete_a_subscriber');
 
