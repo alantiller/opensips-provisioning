@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8">
-                <span class="text-muted d-block">OpenSIPS Provisioning is licenced under MIT. Build Version: 20.08.2022</span>
+                <span class="text-muted d-block">OpenSIPS Provisioning is licenced under MIT. Build Version: 25.08.2022</span>
             </div>
             <div class="col-md-4">
                 <span class="text-muted d-block text-end">Designed and built by Alan Tiller.</span>
