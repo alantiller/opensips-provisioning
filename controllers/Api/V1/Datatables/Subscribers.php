@@ -18,13 +18,13 @@ class Subscribers
             self::authenticate();
 
             $columns = array(
-                array( 'db' => 'id',        'dt' => 0 ),
-                array( 'db' => 'uuid',      'dt' => 1 ),
-                array( 'db' => 'username',  'dt' => 2 ),
-                array( 'db' => 'domain',    'dt' => 3 ),
-                array( 'db' => 'attribute', 'dt' => 4 ),
-                array( 'db' => 'type',      'dt' => 5 ),
-                array( 'db' => 'value',     'dt' => 6 )
+                array( 'db' => 'id',        'dt' => 'id' ),
+                array( 'db' => 'uuid',      'dt' => 'uuid' ),
+                array( 'db' => 'username',  'dt' => 'username' ),
+                array( 'db' => 'domain',    'dt' => 'domain' ),
+                array( 'db' => 'attribute', 'dt' => 'attribute' ),
+                array( 'db' => 'type',      'dt' => 'type' ),
+                array( 'db' => 'value',     'dt' => 'value' )
             );
 
             http_response_code(200);

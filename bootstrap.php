@@ -1,10 +1,5 @@
 <?php echo "\e[0;32m[OpenSIPS Provisioner V0.0.1 - Bootstrapping Tool]\e[0m\n";
 
-if (!isset($argv[1]) || !isset($argv[2]) || !isset($argv[3]) || !isset($argv[4]) || !isset($argv[5]) || !isset($argv[6]) || $argv[1] != '-n' || $argv[3] != '-u' || $argv[5] != '-p')
-{
-    die("You need to create a first user please call this via the following command: bootstrap.php -n \"User Name\" -u username -p password");
-}
-
 // Include modules
 require 'vendor/autoload.php';
 
@@ -22,6 +17,44 @@ $local = new \Medoo\Medoo([
     'username' => $_ENV['LOCALDB_USER'],
     'password' => $_ENV['LOCALDB_PASS']
 ]);
+
+if (isset($argv[1]) && $argv[1] === '-m')
+{
+    // Create the metadata table
+    echo "Creating table 'osp_metadata'\n";
+    $local->create("osp_metadata", [
+        "id" => [
+            "INT",
+            "NOT NULL",
+            "AUTO_INCREMENT",
+            "PRIMARY KEY"
+        ],
+        "subscriber" => [
+            "INT",
+            "NOT NULL"
+        ],
+        "name" => [
+            "VARCHAR(50)",
+            "NOT NULL"
+        ],
+        "value" => [
+            "TEXT",
+            "NOT NULL"
+        ],
+        "timestamp" => [
+            "DATETIME",
+            "NOT NULL"
+        ]
+    ]);
+
+
+    die();
+}
+
+if (!isset($argv[1]) || !isset($argv[2]) || !isset($argv[3]) || !isset($argv[4]) || !isset($argv[5]) || !isset($argv[6]) || $argv[1] != '-n' || $argv[3] != '-u' || $argv[5] != '-p')
+{
+    die("You need to create a first user please call this via the following command: bootstrap.php -n \"User Name\" -u username -p password");
+}
 
 // Create the Servers table
 $local->create("osp_servers", [
@@ -73,6 +106,10 @@ $local->create("osp_provisions", [
 		"VARCHAR(50)",
 		"NOT NULL"
 	],
+    "opperation" => [
+		"VARCHAR(50)",
+		"NOT NULL"
+	],
     "enabled" => [
 		"boolean",
 		"NOT NULL"
@@ -92,6 +129,12 @@ $local->create("osp_provisions", [
 		"TEXT"
 	],
 	"request_body" => [
+		"TEXT"
+	],
+    "on_success" => [
+		"TEXT"
+	],
+    "on_failure" => [
 		"TEXT"
 	],
     "timestamp" => [
@@ -221,7 +264,7 @@ $local->create("osp_permissions", [
         "DATETIME",
         "NOT NULL"
     ]
-]); 
+]);
 
 // Create the first user
 $password_salt = (new TokenGenerator())->generateToken(20);
@@ -244,8 +287,6 @@ $local->insert("osp_permissions", ["group" => "admin", "entity" => "osp_audit", 
 $local->insert("osp_permissions", ["group" => "admin", "entity" => "osp_users", "value" => 15, "timestamp" => date("Y-m-d H:i:s")]);
 $local->insert("osp_permissions", ["group" => "admin", "entity" => "osp_tokens", "value" => 15, "timestamp" => date("Y-m-d H:i:s")]);
 $local->insert("osp_permissions", ["group" => "admin", "entity" => "osp_permissions", "value" => 15, "timestamp" => date("Y-m-d H:i:s")]);
-
-
 
 if (isset($argv[7]) && $argv[7] === '-d')
 {

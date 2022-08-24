@@ -138,12 +138,34 @@ $( document ).ready(function() {
             serverSide: true,
             responsive: true,
             ajax: '/api/v1/datatables/subscribers',
-            columnDefs: [
+            columns: [
+                { 
+                    data: "uuid"
+                },
+                { 
+                    data: "username"
+                },
+                { 
+                    data: "domain"
+                },
+                { 
+                    data: "attribute"
+                },
+                { 
+                    data: "type"
+                },
+                { 
+                    data: "value"
+                },
                 {
-                    targets: -1,
                     data: null,
                     className: 'all',
-                    defaultContent: '<button class="btn btn-danger">Delete</button>',
+                    defaultContent: '<button class="btn btn-primary" data-action="view_subscriber">View</button>',
+                },
+                {
+                    data: null,
+                    className: 'all',
+                    defaultContent: '<button class="btn btn-danger" data-action="delete_subscriber">Delete</button>',
                 }
             ]
         });        
@@ -182,16 +204,87 @@ $(document).on("click", '[data-action="create_subscriber"]', function(e) {
     setTimeout(function() { $('[data-message="create_subscriber"]').html(""); }, 3000);
 });
 
+// View a subscriber
+$(document).on('click', '#list_subscribers tbody button[data-action="view_subscriber"]', function () {
+    var data = $('#list_subscribers').DataTable().row($(this).parents('tr')).data();
+
+    // Get the data from the API
+    fetch(public_url + '/api/v1/subscribers/' + data['id'], {method: 'GET'})
+    .then(async function (result) {
+        var response = await result.json();
+        if (result.status == 200) {
+            $('[data-label="subscriber_username"]').html( response.data.username );
+            $('[data-input="subscriber_id"]').val( response.data.id );
+            $('[data-input="subscriber_uuid"]').val( response.data.uuid );
+            $('[data-input="subscriber_username"]').val( response.data.username );
+            $('[data-input="subscriber_domain"]').val( response.data.domain );
+            $('[data-input="subscriber_attribute"]').val( response.data.attribute );
+            $('[data-input="subscriber_type"]').val( response.data.type );
+            $('[data-input="subscriber_server"]').val( response.data.value );
+            $('[data-input="subscriber_last_modified"]').val( response.data.last_modified );
+        } else {
+            $('[data-message="subscribers"]').html("<div class=\"alert alert-danger\" role=\"alert\">Unable to show record: " + response.error.message + "</div>");
+            setTimeout(function() { $('[data-message="subscribers"]').html(""); }, 3000);
+            return;
+        }
+    });
+
+    // Get the metadata table from the API
+    fetch(public_url + '/api/v1/subscribers/' + data['id'] + '/metadata', {method: 'GET'})
+    .then(async function (result) {
+        var response = await result.json();
+        if (result.status == 200) {
+            $('[data-table="subscriber_metadata"]').html('');
+            response.data.forEach(element => {
+                table_row = $('<tr/>');
+                row_label = $('<td/>', {scope: 'row'}).html(element.label);
+                row_value = $('<td/>').html(element.value);
+                row_timestamp = $('<td/>').html(element.timestamp);
+                table_row.append(row_label);
+                table_row.append(row_value);
+                table_row.append(row_timestamp);
+                $('[data-table="subscriber_metadata"]').append( table_row );
+            });
+        } else {
+            $('[data-message="subscribers"]').html("<div class=\"alert alert-danger\" role=\"alert\">Unable to show record: " + response.error.message + "</div>");
+            setTimeout(function() { $('[data-message="subscribers"]').html(""); }, 3000);
+            return;
+        }
+    });
+
+    // Reset system fields
+    $('[data-input="subscriber_id"]').parent().hide();
+    $('[data-input="subscriber_last_modified"]').parent().hide();
+    $('[data-action="subscriber_hide_system_fields"]').html('Show System Fields').attr('data-action', 'subscriber_show_system_fields');
+
+    // Open the modal
+    $("#view_subscriber").modal('show');
+});
+
+// View a subscriber - Show System Fields
+$(document).on('click', '[data-action="subscriber_show_system_fields"]', function () {
+    $('[data-input="subscriber_id"]').parent().show();
+    $('[data-input="subscriber_last_modified"]').parent().show();
+    $('[data-action="subscriber_show_system_fields"]').html('Hide System Fields').attr('data-action', 'subscriber_hide_system_fields');
+});
+
+// View a subscriber - Hide System Fields
+$(document).on('click', '[data-action="subscriber_hide_system_fields"]', function () {
+    $('[data-input="subscriber_id"]').parent().hide();
+    $('[data-input="subscriber_last_modified"]').parent().hide();
+    $('[data-action="subscriber_hide_system_fields"]').html('Show System Fields').attr('data-action', 'subscriber_show_system_fields');
+});
+
 // Delete a subscriber
-$(document).on('click', '#list_subscribers tbody button', function () {
+$(document).on('click', '#list_subscribers tbody button[data-action="delete_subscriber"]', function () {
     var data = $('#list_subscribers').DataTable().row($(this).parents('tr')).data();
     console.log(data);
 
     // Open up confirm box
-    if (confirm("Are you sure you want to delete subscriber: " + data[2])) {
+    if (confirm("Are you sure you want to delete subscriber: " + data['username'])) {
         
         // Call the API
-        fetch(public_url + '/api/v1/subscribers/' + data[0], {method: 'DELETE'})
+        fetch(public_url + '/api/v1/subscribers/' + data['id'], {method: 'DELETE'})
         .then(async function (result) {
             if (result.status == 200) {
                 $('[data-message="subscribers"]').html("<div class=\"alert alert-success\" role=\"alert\">Subscriber deleted</div>");

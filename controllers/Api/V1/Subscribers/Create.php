@@ -204,10 +204,35 @@ class Create
 
                 // Make the API call
                 $client = new Client();
-                $client->request($provision['request_method'], $provision['request_url'], $options);
+                $response = $client->request($provision['request_method'], $provision['request_url'], $options);
+
+                // Get body and execute any code
+                if (substr(strval($response->getStatusCode()), 0, 1) === "2")
+                {
+                    if ($provision['on_success'] != null || $provision['on_success'] != "")
+                    {
+                        self::execute($provision['on_success'], $response->getBody());
+                    }
+                }
+                else
+                {
+                    if ($provision['on_failure'] != null || $provision['on_failure'] != "")
+                    {
+                        self::execute($provision['on_failure'], $response->getBody());
+                    }
+                }
             } catch (Exception $error) {
             }
         }
         return true;
+    }
+
+    private static function execute($code)
+    {
+        try {
+            eval($code);
+        } catch (Exception $error) {
+            return false;
+        }
     }
 }
