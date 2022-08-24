@@ -45,6 +45,23 @@ $router->map('POST', '/api/v1/servers', 'Api\V1\Servers\Create::create', 'create
 // V1 - Servers - Delete
 $router->map('DELETE', '/api/v1/servers/[i:id]', 'Api\V1\Servers\Delete::delete', 'delete_server');
 
+
+// V1 - Provisions - Get
+$router->map('GET', '/api/v1/provisions', 'Api\V1\Provisions\Get::get', 'get_provisions');
+
+// V1 - Provisions - Create
+$router->map('POST', '/api/v1/provisions', 'Api\V1\Provisions\Create::create', 'create_provision');
+
+// V1 - Provisions - Single
+$router->map('GET', '/api/v1/provisions/[i:id]', 'Api\V1\Provisions\Single::get', 'get_provision');
+
+// V1 - Provisions - Update
+$router->map('PATCH', '/api/v1/provisions/[i:id]', 'Api\V1\Provisions\Update::update', 'update_provision');
+
+// V1 - Provisions - Delete
+$router->map('DELETE', '/api/v1/provisions/[i:id]', 'Api\V1\Provisions\Delete::delete', 'delete_provision');
+
+
 // V1 - Users - Create
 $router->map('POST', '/api/v1/users', 'Api\V1\Users\Create::create', 'create_user');
 

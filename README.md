@@ -18,7 +18,12 @@ league/plates: This is the template engine for the Web UI
 
 The portal is designed for use on your own internal systems not on the open internet so does not currently have any sort of authentication. It does encoperate API Keys to stop requests from making changes to OpenSIPS across your network without permission.
 
-## Tables
+
+## Provisions
+
+
+
+## Database Tables
 
 OpenSIPS Provisioner requires a couple of tables to be created in order for the software to function. You can choose where to put these tables they can either be in their own database or you can store them inside the OpenSIPS database due to the use of the 'ops_' prefix meaning they won't conflict with any of OpenSIPS tables.
 
@@ -26,10 +31,15 @@ osp_servers - This holds the servers you want to be provisioned through OpenSIPS
 
 osp_provisions - This table holds all the provisions you setup these run right before a row is inserted into OpenSIPS. This could be an API call to create a Subscriber on a destination server before inserting it into OpenSIPS.
 
-osp_auditlog - 
 
-osp_users - 
+### Initial Release
 
-osp_tokens - 
 
-## Provisions
+
+### 11.08.2022
+
+osp_audit + Addition of field 'user' to collect User ID
+
+### 19.08.2022
+
+osp_provision + Addition of opperation field to record when action should be carried out 'create', 'update', 'delete'

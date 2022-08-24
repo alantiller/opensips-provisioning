@@ -10,6 +10,16 @@
 const url_params = new URLSearchParams( window.location.search );
 const public_url = location.protocol + '//' + location.host;
 
+
+/*
+ * Icon Variables
+ */
+
+var code_emoji = '<svg xmlns="http://www.w3.org/2000/svg" style="vertical-align: top;" width="16" height="16" fill="currentColor" class="bi bi-code" viewBox="0 0 16 16"><path d="M5.854 4.854a.5.5 0 1 0-.708-.708l-3.5 3.5a.5.5 0 0 0 0 .708l3.5 3.5a.5.5 0 0 0 .708-.708L2.707 8l3.147-3.146zm4.292 0a.5.5 0 0 1 .708-.708l3.5 3.5a.5.5 0 0 1 0 .708l-3.5 3.5a.5.5 0 0 1-.708-.708L13.293 8l-3.147-3.146z"/></svg>';
+var message_emoji = '<svg xmlns="http://www.w3.org/2000/svg" style="vertical-align: top;" width="16" height="16" fill="currentColor" class="bi bi-chat-dots" viewBox="0 0 16 16"><path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/><path d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9.06 9.06 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.437 10.437 0 0 1-.524 2.318l-.003.011a10.722 10.722 0 0 1-.244.637c-.079.186.074.394.273.362a21.673 21.673 0 0 0 .693-.125zm.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6c0 3.193-3.004 6-7 6a8.06 8.06 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a10.97 10.97 0 0 0 .398-2z"/></svg>';
+var method_emoji = '<svg xmlns="http://www.w3.org/2000/svg" style="vertical-align: top;" width="16" height="16" fill="currentColor" class="bi bi-signpost-split" viewBox="0 0 16 16"><path d="M7 7V1.414a1 1 0 0 1 2 0V2h5a1 1 0 0 1 .8.4l.975 1.3a.5.5 0 0 1 0 .6L14.8 5.6a1 1 0 0 1-.8.4H9v10H7v-5H2a1 1 0 0 1-.8-.4L.225 9.3a.5.5 0 0 1 0-.6L1.2 7.4A1 1 0 0 1 2 7h5zm1 3V8H2l-.75 1L2 10h6zm0-5h6l.75-1L14 3H8v2z"/></svg>';
+        
+
 /*
  * Dashboard Functions
  */
@@ -88,9 +98,6 @@ $( document ).ready(function() {
     }
     // Load Audit Errors
     if ($('[data-output="audit_errors"]').length) {
-        var code_emoji = '<svg xmlns="http://www.w3.org/2000/svg" style="vertical-align: top;" width="16" height="16" fill="currentColor" class="bi bi-code" viewBox="0 0 16 16"><path d="M5.854 4.854a.5.5 0 1 0-.708-.708l-3.5 3.5a.5.5 0 0 0 0 .708l3.5 3.5a.5.5 0 0 0 .708-.708L2.707 8l3.147-3.146zm4.292 0a.5.5 0 0 1 .708-.708l3.5 3.5a.5.5 0 0 1 0 .708l-3.5 3.5a.5.5 0 0 1-.708-.708L13.293 8l-3.147-3.146z"/></svg>';
-        var message_emoji = '<svg xmlns="http://www.w3.org/2000/svg" style="vertical-align: top;" width="16" height="16" fill="currentColor" class="bi bi-chat-dots" viewBox="0 0 16 16"><path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/><path d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9.06 9.06 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.437 10.437 0 0 1-.524 2.318l-.003.011a10.722 10.722 0 0 1-.244.637c-.079.186.074.394.273.362a21.673 21.673 0 0 0 .693-.125zm.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6c0 3.193-3.004 6-7 6a8.06 8.06 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a10.97 10.97 0 0 0 .398-2z"/></svg>';
-        var method_emoji = '<svg xmlns="http://www.w3.org/2000/svg" style="vertical-align: top;" width="16" height="16" fill="currentColor" class="bi bi-signpost-split" viewBox="0 0 16 16"><path d="M7 7V1.414a1 1 0 0 1 2 0V2h5a1 1 0 0 1 .8.4l.975 1.3a.5.5 0 0 1 0 .6L14.8 5.6a1 1 0 0 1-.8.4H9v10H7v-5H2a1 1 0 0 1-.8-.4L.225 9.3a.5.5 0 0 1 0-.6L1.2 7.4A1 1 0 0 1 2 7h5zm1 3V8H2l-.75 1L2 10h6zm0-5h6l.75-1L14 3H8v2z"/></svg>';
         fetch(public_url + '/api/v1/dashboard/audit-errors')
         .then(async function (result) {
             if (result.status == 200) {
@@ -394,16 +401,129 @@ $(document).on('click', '#list_servers tbody button', function () {
  * Provisions Functions
  */
 
-// Load the datatable
+// Load the provisions
 $( document ).ready(function() {
-    if ($('#list_provisions').length) {
-        $('#list_provisions').DataTable({
-            processing: true,
-            serverSide: true,
-            responsive: true,
-            ajax: '/api/v1/datatables/provisions'
-        });
+    // Get the provisions
+    fetch(public_url + '/api/v1/provisions', {method: 'GET'})
+    .then(async function (result) {
+        var response = await result.json();
+        if (result.status == 200) {
+            $('[data-table="subscriber_metadata"]').html('');
+            response.data.forEach(element => {
+                list_item = $('<div/>', {class: 'list-group-item'});
+                container = $('<div/>', {class: 'd-md-flex justify-content-between align-items-center'});
+                left = $('<div/>');
+                right = $('<div/>');
+                title = $('<div/>', {class: 'flex-grow-1 text-break', style: 'margin-left: 0px;'});
+                title_span = $('<span/>', {style: 'word-break: break-all;'}).html( element.description + '<span class="badge rounded-pill text-bg-primary ms-3">' + element.server + '</span>' + '<span class="badge rounded-pill ' + (element.enabled == 1 ? 'text-bg-success' : 'text-bg-danger') + ' ms-2">' + (element.enabled == 1 ? 'Enabled' : 'Disabled') + '</span>' );
+                description = $('<div/>', {style: 'opacity: 0.5; font-size: 0.8em; margin-top: 2px;'}).html( element.request_url );
+                edit_button = $('<button/>', {type: 'submit', class: 'btn btn-primary ms-2', 'data-action': 'provision_edit', 'data-id': element.id}).html('Edit');
+                delete_button = $('<button/>', {type: 'submit', class: 'btn btn-danger ms-2', 'data-action': 'provision_delete', 'data-id': element.id}).html('Delete');
+                left.append(title);title.append(title_span);left.append(description);right.append(edit_button);right.append(delete_button);container.append(left);container.append(right);list_item.append(container);
+                switch (element.opperation) {
+                    case 'create':
+                        $('[data-list="provision_create"]').append( list_item );
+                        break;
+                    case 'update':
+                        $('[data-list="provision_update"]').append( list_item );
+                        break;
+                    case 'delete':
+                        $('[data-list="provision_delete"]').append( list_item );
+                        break;
+                }
+            });
+        } else {
+            $('[data-message="subscribers"]').html("<div class=\"alert alert-danger\" role=\"alert\">Unable to show record: " + response.error.message + "</div>");
+            setTimeout(function() { $('[data-message="subscribers"]').html(""); }, 3000);
+            return;
+        }
+    });
+});
+
+// View provision
+$(document).on('click', '[data-action="provision_edit"]', function () {
+    var pid = $(this).attr('data-id');
+
+    // Get the data from the API
+    fetch(public_url + '/api/v1/provisions/' + pid, {method: 'GET'})
+    .then(async function (result) {
+        var response = await result.json();
+        if (result.status == 200) {
+            $('[data-label="provision_name"]').html( response.data.description );
+            $('[data-input="provision_description"]').val( response.data.description );
+            $('[data-input="provision_enabled"]').val( response.data.enabled );
+            $('[data-input="provision_request_method"]').val( response.data.request_method );
+            $('[data-input="provision_request_url"]').val( response.data.request_url );
+            $('[data-input="provision_request_body"]').val( response.data.request_body );
+            $('[data-input="provision_request_auth"]').val( response.data.request_auth );
+            $('[data-input="provision_on_success"]').val( response.data.on_success );
+            $('[data-input="provision_on_failure"]').val( response.data.on_failure );
+            $('[data-action="provision_save"]').attr( 'data-id', response.data.id );
+        } else {
+            $('[data-message="provisions"]').html("<div class=\"alert alert-danger\" role=\"alert\">Unable to show record: " + response.error.message + "</div>");
+            setTimeout(function() { $('[data-message="provisions"]').html(""); }, 3000);
+            return;
+        }
+    });
+
+    // Open the modal
+    $("#provision_popup").modal('show');
+});
+
+// Insert Authentication Example
+$(document).on('click', '[data-provision-auth-example]', function () {
+    var type = $(this).attr('data-provision-auth-example');
+    switch (type) {
+        case 'basic':
+            $('[data-input="provision_request_auth"]').val('{\n    "type": "basic",\n    "username": "",\n    "password": ""\n}');
+            break;
+        case 'bearer':
+            $('[data-input="provision_request_auth"]').val('{\n    "type": "bearer",\n    "bearer": ""\n}');
+            break;
+        case 'api-key':
+            $('[data-input="provision_request_auth"]').val('{\n    "type": "api-key",\n    "key": "",\n    "value": ""\n}');
+            break;
     }
+});
+
+// Edit provision
+$(document).on('click', '[data-action="provision_save"]', function ( event ) {
+    event.preventDefault();
+    var values = $(this).serialize();
+    var pid = $(this).attr('data-id');
+
+    // Get the data from the API
+    fetch(public_url + '/api/v1/provisions/' + pid, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            'description': $('[data-input="provision_description"]').val(),
+            'enabled': $('[data-input="provision_enabled"]').val(),
+            'request_method': $('[data-input="provision_request_method"]').val(),
+            'request_url': $('[data-input="provision_request_url"]').val(), 
+            'request_body': $('[data-input="provision_request_body"]').val(), 
+            'request_auth': $('[data-input="provision_request_auth"]').val(), 
+            'on_success': $('[data-input="provision_on_success"]').val(), 
+            'on_failure': $('[data-input="provision_on_failure"]').val()
+        })
+    })
+    .then(async function (result) {
+        var response = await result.json();
+        if (result.status == 200) {
+            $('[data-action="provision_save"]').attr( 'data-id', '' );
+            $("#provision_popup").modal('hide');
+        } else {
+            $('[data-message="edit_provision"]').html("<div class=\"alert alert-danger\" role=\"alert\">Unable to save record: " + response.error.message + "</div>");
+            
+            return;
+        }
+        setTimeout(function() { $('[data-message="edit_provision"]').html(""); }, 3000);
+    });
+
+    // Open the modal
+    $("#provision_popup").modal('show');
 });
 
 

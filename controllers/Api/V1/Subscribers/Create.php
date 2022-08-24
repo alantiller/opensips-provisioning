@@ -11,6 +11,7 @@ namespace Api\V1\Subscribers;
 use \Exception;
 use \Tokenly\TokenGenerator\TokenGenerator;
 use \GuzzleHttp\Client;
+use \Provisions\Run;
 
 class Create
 {
@@ -33,9 +34,6 @@ class Create
             $attribute = ($output['attribute'] != null ? $output['attribute'] : $server['attribute']);
             $type = ($output['type'] != null ? $output['type'] : $server['type']);
 
-            // Run a provisions that have been setup by the end user
-            self::provision($server['address'], $output['cli']);
-
             // Create the new subscriber in the server
             $opensips->insert('usr_preferences', [
                 'uuid' => $output['cli'],
@@ -46,6 +44,9 @@ class Create
                 'value' => $server['address'],
                 'last_modified' => \Medoo\Medoo::raw('NOW()')
             ]);
+
+            // Run a provisions that have been setup by the end user
+            self::provision($server['address'], $output['cli'],  $opensips->id());
 
             // Return response
             http_response_code(200);
@@ -167,7 +168,7 @@ class Create
     }
 
     // This function is called when a create command is run and triggers any provisions setup in OpenSIPS Provisioner
-    private static function provision($server, $cli)
+    private static function provision($server, $cli, $subscriber_id)
     {
         global $local;
 
@@ -179,60 +180,8 @@ class Create
 
         // Loop through each gateway and get a count
         foreach ($provisions as $provision) {
-            try {
-                // Create the body
-                $request_body = $provision['request_body'];
-                $request_body = str_replace('{{OpenSIPS.Username}}', $cli, $request_body);
-                $request_body = str_replace('{{OpenSIPS.Password}}', $password, $request_body);
-
-                // Create options
-                $options = array('body' => $request_body);
-
-                // Set auth
-                if (isset($provision['request_auth']) && $provision['request_auth'] != null)
-                {
-                    $auth_json = json_decode($provision['request_auth'], true);
-                    switch ($auth_json['type']) {
-                        case 'basic':
-                            $options['auth'] = array($auth_json['username'], $auth_json['password']);
-                            break;
-                        case 'bearer':
-                            $options['headers'] = array('Authorization' => 'Bearer ' . $auth_json['bearer']);
-                            break;
-                    }
-                }
-
-                // Make the API call
-                $client = new Client();
-                $response = $client->request($provision['request_method'], $provision['request_url'], $options);
-
-                // Get body and execute any code
-                if (substr(strval($response->getStatusCode()), 0, 1) === "2")
-                {
-                    if ($provision['on_success'] != null || $provision['on_success'] != "")
-                    {
-                        self::execute($provision['on_success'], $response->getBody());
-                    }
-                }
-                else
-                {
-                    if ($provision['on_failure'] != null || $provision['on_failure'] != "")
-                    {
-                        self::execute($provision['on_failure'], $response->getBody());
-                    }
-                }
-            } catch (Exception $error) {
-            }
+            new Run($provision['id'], $subscriber_id, $cli, $password);
         }
         return true;
-    }
-
-    private static function execute($code)
-    {
-        try {
-            eval($code);
-        } catch (Exception $error) {
-            return false;
-        }
     }
 }

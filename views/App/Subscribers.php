@@ -93,19 +93,17 @@
                     </div>
                 </div>
                 <h5 class="mt-2">Metadata</h5>
-                <div class="rounded overflow-hidden mt-2">
-                    <table class="table table-sm table-warning table-striped mb-0">
-                        <thead>
-                            <tr>
-                                <th scope="col">Label</th>
-                                <th scope="col">Value</th>
-                                <th scope="col">Created On</th>
-                            </tr>
-                        </thead>
-                        <tbody class="table-group-divider" data-table="subscriber_metadata">
-                        </tbody>
-                    </table>
-                </div>
+                <table class="table mb-0 mt-2">
+                    <thead>
+                        <tr>
+                            <th scope="col">Label</th>
+                            <th scope="col">Value</th>
+                            <th scope="col">Created On</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider" data-table="subscriber_metadata">
+                    </tbody>
+                </table>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light" data-action="subscriber_show_system_fields">Show System Fields</button>
