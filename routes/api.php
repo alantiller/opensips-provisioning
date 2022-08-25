@@ -39,6 +39,9 @@ $router->map('GET', '/api/v1/subscribers/[i:id]/metadata', 'Api\V1\Subscribers\M
 // V1 - Subscribers - Delete
 $router->map('DELETE', '/api/v1/subscribers/[i:id]', 'Api\V1\Subscribers\Delete::delete', 'delete_a_subscriber');
 
+// V1 - Servers - Get
+$router->map('GET', '/api/v1/servers', 'Api\V1\Servers\Get::get', 'get_servers');
+
 // V1 - Servers - Create
 $router->map('POST', '/api/v1/servers', 'Api\V1\Servers\Create::create', 'create_server');
 

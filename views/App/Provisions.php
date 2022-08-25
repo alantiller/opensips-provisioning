@@ -44,8 +44,33 @@
                         <h5>Provisions <span class="badge bg-secondary align-top">BETA</span></h5>
                         <div style="opacity: 0.6; font-size: 0.9em;">You can use provisions to automate other aspects of your SIP setup such as provisioning your call servers or routings.</div>
                     </div>
-                    <div class="py-3 list-group-item d-grid">
-                        <p>Initial creation needs to be done via API or database.</p>
+                    <div class="py-3 list-group-item">
+                        
+                        <div class="mb-3 form-group">
+                            <label for="user_name" class="mb-1">Description</label>
+                            <input type="text" class="form-control" placeholder="" data-input="provision_create_description"/>
+                        </div>
+
+                        <div class="mb-3 form-group">
+                            <label for="user_name" class="mb-1">Server</label>
+                            <select class="form-select" data-input="provision_create_server">
+                                <option value="" selected disabled> - Select Server - </option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3 form-group">
+                            <label for="provision_create_opperation" class="mb-1">Opperation</label>
+                            <select class="form-select" data-input="provision_create_opperation">
+                                <option value="" selected disabled> - Select Opperation - </option>
+                                <option value="create">On Create</option>
+                                <option value="delete">On Delete</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary mb-3" data-action="provision_create">Create</button>
+
+                        <span data-message="provision_create"></span>
+
                     </div>
                 </div>
             </div>

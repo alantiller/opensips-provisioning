@@ -403,6 +403,12 @@ $(document).on('click', '#list_servers tbody button', function () {
 
 // Load the provisions
 $( document ).ready(function() {
+    load_provisions();
+});
+function load_provisions() {
+    // Remove all items loaded in
+    $('[data-type="provision_list_item"]').remove();
+
     // Get the provisions
     fetch(public_url + '/api/v1/provisions', {method: 'GET'})
     .then(async function (result) {
@@ -410,7 +416,7 @@ $( document ).ready(function() {
         if (result.status == 200) {
             $('[data-table="subscriber_metadata"]').html('');
             response.data.forEach(element => {
-                list_item = $('<div/>', {class: 'list-group-item'});
+                list_item = $('<div/>', {class: 'list-group-item', 'data-type': 'provision_list_item'});
                 container = $('<div/>', {class: 'd-md-flex justify-content-between align-items-center'});
                 left = $('<div/>');
                 right = $('<div/>');
@@ -418,8 +424,10 @@ $( document ).ready(function() {
                 title_span = $('<span/>', {style: 'word-break: break-all;'}).html( element.description + '<span class="badge rounded-pill text-bg-primary ms-3">' + element.server + '</span>' + '<span class="badge rounded-pill ' + (element.enabled == 1 ? 'text-bg-success' : 'text-bg-danger') + ' ms-2">' + (element.enabled == 1 ? 'Enabled' : 'Disabled') + '</span>' );
                 description = $('<div/>', {style: 'opacity: 0.5; font-size: 0.8em; margin-top: 2px;'}).html( element.request_url );
                 edit_button = $('<button/>', {type: 'submit', class: 'btn btn-primary ms-2', 'data-action': 'provision_edit', 'data-id': element.id}).html('Edit');
-                delete_button = $('<button/>', {type: 'submit', class: 'btn btn-danger ms-2', 'data-action': 'provision_delete', 'data-id': element.id}).html('Delete');
-                left.append(title);title.append(title_span);left.append(description);right.append(edit_button);right.append(delete_button);container.append(left);container.append(right);list_item.append(container);
+                //delete_button = $('<button/>', {type: 'submit', class: 'btn btn-danger ms-2', 'data-action': 'provision_delete', 'data-id': element.id}).html('Delete');
+                left.append(title);title.append(title_span);left.append(description);right.append(edit_button);
+                //right.append(delete_button);
+                container.append(left);container.append(right);list_item.append(container);
                 switch (element.opperation) {
                     case 'create':
                         $('[data-list="provision_create"]').append( list_item );
@@ -438,6 +446,60 @@ $( document ).ready(function() {
             return;
         }
     });
+}
+
+// Set the servers
+$( document ).ready(function() {
+    if ($('[data-input="provision_create_server"]').length) {
+        fetch(public_url + '/api/v1/servers')
+        .then(async function (result) {
+            if (result.status == 200) {
+                var response = await result.json();
+                if (response.data.length > 0) {
+                    response.data.forEach(function (server) {
+                        option = $( '<option/>', {value: server.address} ).html( server.description + ' (' + server.address + ')' );
+                        $('[data-input="provision_create_server"]').append(option);
+                    });
+                }
+            }
+        });
+    }
+});
+
+// Create provision
+$(document).on("click", '[data-action="provision_create"]', function(e) {
+    // Run error handling and return if any errors are found
+    error = 0; 
+    if( !$('[data-input="provision_create_description"]').val() ) {$('[data-input="provision_create_description"]').addClass('is-invalid');error++;}else{$('[data-input="provision_create_description"]').removeClass('is-invalid');}
+    if( !$('[data-input="provision_create_server"]').val() ) {$('[data-input="provision_create_server"]').addClass('is-invalid');error++;}else{$('[data-input="provision_create_server"]').removeClass('is-invalid');}
+    if( !$('[data-input="provision_create_opperation"]').val() ) {$('[data-input="provision_create_opperation"]').addClass('is-invalid');error++;}else{$('[data-input="provision_create_opperation"]').removeClass('is-invalid');}
+    if (error > 0) {return;}
+
+    // Call the API
+    fetch(public_url + '/api/v1/provisions', {
+        method: 'POST',
+        body: JSON.stringify({
+            "description": $('[data-input="provision_create_description"]').val(),
+            "server": $('[data-input="provision_create_server"]').val(),
+            "opperation": $('[data-input="provision_create_opperation"]').val()
+        }),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(async function (result) {
+        var response = await result.json();
+        if (result.status == 200) {
+            $('[data-message="provision_create"]').html("<div class=\"alert alert-success\" role=\"alert\">Provision created.</div>");
+            load_provisions();
+        } else {
+            // Login failed show error message
+            $('[data-message="provision_create"]').html("<div class=\"alert alert-danger\" role=\"alert\">" + response.error.message + "</div>");
+        }
+    });
+
+    // Remove the error message and reset the text on the button
+    setTimeout(function() { $('[data-message="provision_create"]').html(""); }, 3000);
 });
 
 // View provision
@@ -514,6 +576,7 @@ $(document).on('click', '[data-action="provision_save"]', function ( event ) {
         if (result.status == 200) {
             $('[data-action="provision_save"]').attr( 'data-id', '' );
             $("#provision_popup").modal('hide');
+            load_provisions();
         } else {
             $('[data-message="edit_provision"]').html("<div class=\"alert alert-danger\" role=\"alert\">Unable to save record: " + response.error.message + "</div>");
             
@@ -706,7 +769,7 @@ $( document ).ready(function() {
                 var response = await result.json();
                 if (response.data.length > 0) {
                     response.data.forEach(function (server) {
-                        option = $( '<option/>', {name: server} ).html(server);
+                        option = $( '<option/>', {value: server} ).html(server);
                         $('#permission_groups').append(option);
                     });
                 }
